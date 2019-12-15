@@ -30,7 +30,3 @@ api.add_resource(MovieItem, '/movie/<id>')
 api.add_resource(MovieComments, '/movie/<id>/comments')
 api.add_resource(MovieComment, '/movie/<movie_id>/comments/<comment_id>')
 api.add_resource(MovieGenreList, '/movie-genres')
-
-
-# if __name__ == '__main__':
-#     app.run('0.0.0.0', 8000, debug=True)

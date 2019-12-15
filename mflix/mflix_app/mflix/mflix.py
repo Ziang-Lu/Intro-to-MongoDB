@@ -12,6 +12,7 @@ from urllib.parse import urlencode
 import bson.json_util
 import flask_login
 from flask import redirect, render_template, request, url_for
+from flask_login import current_user
 
 from . import app
 
@@ -109,7 +110,7 @@ def show_movie_comments(id: str):
             f'http://movie_service:8000/movies/{id}/comments',
             json={
                 'movie_id': id,
-                'user': flask_login.current_user.to_json(),
+                'user': current_user.to_json(),
                 'text': comment,
                 'date': datetime.now().isoformat()
             }
