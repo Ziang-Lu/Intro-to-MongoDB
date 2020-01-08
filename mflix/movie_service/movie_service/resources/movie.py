@@ -22,6 +22,10 @@ class MovieList(Resource):
     """
 
     def get(self):
+        """
+        Returns all the movies in the specified page.
+        :return:
+        """
         filters = request.get_json()
         if filters is None:
             filters = {}
@@ -87,7 +91,7 @@ class MovieGenreList(Resource):
 
     def get(self):
         """
-        Returns all the genres.
+        Returns all the movie genres.
         :return:
         """
         pipeline = [

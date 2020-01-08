@@ -56,7 +56,66 @@ Then simply go to http://localhost:5000
 We separate `auth_service` and `movie_service` out as Flask-based web services:
 
 * `auth_service` is responsible for user registeration and user authentication issues, and talks to `MongoDB` directly.
+
+  Defined resources:
+
+  * `UserList`
+
+    Route: `/users`
+
+    | Method | Description                                                | Request Form Schema                               | Reponse Status Code                                          |
+    | ------ | ---------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ |
+    | GET    | Returns the user with a specified email                    | <u>Query</u>:<br>`email`: string                  | 200 on success, 400 on no email provided, 404 on user not found |
+    | POST   | Adds a user with the given name, email and hashed password | `name`: string<br>`email`: string<br>`pw`: string | 201 on success, 400 on invalid data provided                 |
+
+  * `UserAuth`
+
+    Route: `/user-auth`
+
 * `movie_service` is responsible for all the information related to movies and movie comments, and talks to `MongoDB` directly.
+
+  Defined resources:
+
+  * `MovieList`
+
+    Route: `/movies`
+
+    | Method | Description            | Request Form Schema | Reponse Status Code |
+    | ------ | ---------------------- | ------------------- | ------------------- |
+    | GET    | Returns all the movies |                     | 200 on success      |
+
+  * `MovieItem`
+
+    Route: `/movie/<id>`
+
+    | Method | Description                         | Request Form Schema | Reponse Status Code                                          |
+    | ------ | ----------------------------------- | ------------------- | ------------------------------------------------------------ |
+    | GET    | Returns the movie with the given ID |                     | 200 on success, 400 on invalid movie ID, 404 on movie not found |
+
+  * `MovieGenreList`
+
+    Route: `/movie-genres`
+
+    | Method | Description                  | Request Form Schema | Reponse Status Code |
+    | ------ | ---------------------------- | ------------------- | ------------------- |
+    | GET    | Returns all the movie genres |                     | 200 on success      |
+
+  * `MovieComments`
+
+    Route: `/movie/<movie_id>/comments`
+
+    | Method | Description                                                  | Request Form Schema                                          | Reponse Status Code                                          |
+    | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+    | GET    | Returns all the comment of the given movie, from most-recent to least-recent |                                                              | 200 on success, 400 on invalid movie ID                      |
+    | POST   | Adds a comment to the given movie                            | `movie_id`: string<br>`user`: dict<br>`text`: string<br>`date`: string | 201 on success, 404 on movie not found, 400 on invalid data provided |
+
+  * `MovieComment`
+
+    Route: `/movie/<movie_id>/comments/<comment_id>`
+
+    | Method | Description                                    | Request Form Schema | Reponse Status Code |
+    | ------ | ---------------------------------------------- | ------------------- | ------------------- |
+    | DELETE | Deletes the given comment from the given movie |                     | 204 on success      |
 
 ***
 
