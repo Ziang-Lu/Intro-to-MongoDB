@@ -6,6 +6,10 @@ services:
       - auth_service
       - movie_service
     build: ./mflix_app
+    environment:
+      - USER=zianglu
+      - PASSWORD=Zest2016!
+      - DB_NAME=mflix
     ports:
       # Bind container port 8000 to the host port 8000
       - "8000:8000"
