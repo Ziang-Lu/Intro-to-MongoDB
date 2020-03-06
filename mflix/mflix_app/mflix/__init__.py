@@ -12,9 +12,3 @@ login_manager = LoginManager(app)
 
 from .auth import *
 from .mflix import *
-
-# Why not using "Application Factory Pattern"?
-# Because if we use a application factory, when registering the routes, they
-# won't have access to the the actual application object itself to be registered
-# on, so we have to use blueprints, which I don't want to use since this is
-# meant to be a very simple, introductory application.

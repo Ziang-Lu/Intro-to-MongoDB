@@ -16,17 +16,15 @@ try:
 except KeyError:
     raise Exception("You haven't configured your MFLIX_DB_URI!")
 
-ma = Marshmallow()
-bcrypt = Bcrypt()
-
-from .resources.auth import UserAuth, UserList
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'auth-service-mongodb'
 
+ma = Marshmallow(app)
+bcrypt = Bcrypt(app)
+
 api = Api(app)
+
+from .resources.auth import UserAuth, UserList
+
 api.add_resource(UserList, '/users')
 api.add_resource(UserAuth, '/user-auth')
-
-ma.init_app(app)
-bcrypt.init_app(app)

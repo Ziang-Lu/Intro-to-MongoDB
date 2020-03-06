@@ -22,8 +22,6 @@ services:
       # default port 8000, rather than the default port 5000 of Flask
       # development server.
       - 8000
-      # Note that this port is only exposed to other services in the same
-      # network, but not to outside world
     restart: always
 
   movie_service:

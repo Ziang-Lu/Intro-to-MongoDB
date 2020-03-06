@@ -28,28 +28,7 @@ In `env.sh`, we defined the necessary environmental variables for this project. 
 
 ## Tech Stack (Implementation Notes)
 
-### 1. Naive Implementation (Monolithic)
-
-The entire application is implemented as a monolithic `Flask` application.
-
-* Since this project uses `MongoDB` as the database, user registration form is pure HTML fields, and each user is stored as a document in MongoDB.
-* This project uses `Flask-Login` module to handle user log-in/log-out, authentication and session issues.
-
-Check out the `naive-impl-dev` branch on the GitHub repo: https://github.com/Ziang-Lu/Intro-to-MongoDB/tree/naive-impl-dev
-
-
-
-**Run the application**
-
-```bash
-$ ./run.sh
-```
-
-Then simply go to http://localhost:5000
-
-<br>
-
-### 2. Implementation with RESTful Architecture (Microservices)
+#### Implementation with RESTful Architecture (Microservices)
 
 <img src="https://github.com/Ziang-Lu/Intro-to-MongoDB/blob/master/mflix/Mflix%20RESTful%20Architecture.png?raw=true">
 
@@ -121,7 +100,6 @@ We separate `auth_service` and `movie_service` out as Flask-based web services:
 
 **RESTful Web Service Implementation Details**
 
-* These web services can be implemented in two ways: check out https://github.com/Ziang-Lu/RESTful-with-Flask/blob/master/Bookstore%20Web%20Service%20Documentation.md. Here we simply use `Flask-RESTful` framework to implement these web services.
 * `Marshmallow/Flask-Marshmallow` is used for schema definition & deserialization (including validation) / serialization.
 
 ***
@@ -142,7 +120,7 @@ In this way, the original Mflix app now becomes a "skeleton" or a "gateway", whi
 
 Thus, in the original Mflix app, we still use `Flask-Login` to handle user log-in/log-out and authentication issues, as well as session management.
 
-
+<br>
 
 **Run the application**
 
