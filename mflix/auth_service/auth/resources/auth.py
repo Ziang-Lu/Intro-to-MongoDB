@@ -87,12 +87,12 @@ class UserAuth(Resource):
         if not user:
             return {
                 'message': 'Make sure your email is correct'
-            }, 400
+            }, 404
 
         if not bcrypt.check_password_hash(user['pw'], request.json['pw']):
             return {
                 'message': 'Make sure your password is correct'
-            }, 400
+            }, 401
         return {
             'status': 'success',
             'data': user_schema.dump(user)

@@ -50,6 +50,10 @@ We separate `auth_service` and `movie_service` out as Flask-based web services:
   * `UserAuth`
 
     Route: `/user-auth`
+    
+    | Method | Description                 | Request Form Data                                         | Response Status Code                                         |
+    | ------ | --------------------------- | --------------------------------------------------------- | ------------------------------------------------------------ |
+    | GET    | Handles user authentication | <u>Query:</u><br>`email`: string<br>JSON:<br>`pw`: string | 200 on success, 400 on no email provided, 404 on user not found, 401 on authentication failed |
 
 * `movie_service` is responsible for all the information related to movies and movie comments, and talks to `MongoDB` directly.
 
