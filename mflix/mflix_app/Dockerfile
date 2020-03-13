@@ -4,6 +4,10 @@ FROM mflix_base
 COPY . /mflix_app
 # Specify the working directory as "/mflix_app/"
 WORKDIR /mflix_app
+
+# Set environment variables
+ENV FLASK_SECRET_KEY mflix-app-mongodb
+
 # When running the application in its own container, we use Gunicorn, rather
 # than the default Flask development server.
 # Since we want everyone outside the Docker container to be able to access the

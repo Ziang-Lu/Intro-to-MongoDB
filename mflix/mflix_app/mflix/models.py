@@ -9,7 +9,7 @@ from typing import Optional
 
 from flask_login import UserMixin
 
-from . import login_manager
+from . import AUTH_SERVICE, login_manager
 
 
 class User(UserMixin):
@@ -58,6 +58,6 @@ def _get_user(email: str) -> Optional[dict]:
     :param email: str
     :return: dict or None
     """
-    r = requests.get(f'http://auth_service:8000/users/?email={email}')
+    r = requests.get(f'{AUTH_SERVICE}/users/?email={email}')
     if r.status_code == 200:
         return r.json()['data']

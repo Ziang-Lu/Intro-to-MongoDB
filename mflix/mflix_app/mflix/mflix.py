@@ -14,7 +14,7 @@ import flask_login
 from flask import redirect, render_template, request, url_for
 from flask_login import current_user
 
-from . import app
+from . import MOVIE_SERVICE, app
 
 
 @app.route('/')
@@ -42,7 +42,7 @@ def show_movies():
     args_copy['page'] = page + 1
     next_page = urlencode(args_copy)
 
-    request_url = f'http://movie_service:8000/movies'
+    request_url = f'{MOVIE_SERVICE}/movies'
     if request.args:
         request_url += f'?{urlencode(request.args)}'
 
@@ -51,7 +51,7 @@ def show_movies():
     page_movies = bson.json_util.loads(json_data['page_movies'])  # A BSON document is serialized to a string, so we need to deserialize it back to a BSON document.
     total_num_of_movies = json_data['total_num_of_movies']
 
-    r = requests.get('http://movie_service:8000/movie-genres')
+    r = requests.get(f'{MOVIE_SERVICE}/movie-genres')
     all_genres = r.json()['data']
 
     context = {
@@ -89,7 +89,7 @@ def _get_movie(id: str) -> Optional[dict]:
     :param id:
     :return: dict or None
     """
-    r = requests.get(f'http://movie_service:8000/movies/{id}')
+    r = requests.get(f'{MOVIE_SERVICE}/movies/{id}')
     if r.status_code == 200:
         return bson.json_util.loads(r.json()['data'])
     else:
@@ -107,7 +107,7 @@ def show_movie_comments(id: str):
     if request.method == 'POST':
         comment = request.form['comment']
         requests.post(
-            f'http://movie_service:8000/movies/{id}/comments',
+            f'{MOVIE_SERVICE}/movies/{id}/comments',
             json={
                 'movie_id': id,
                 'user': current_user.to_json(),
@@ -117,7 +117,7 @@ def show_movie_comments(id: str):
         )
         return redirect(url_for('show_movie', id=id))
 
-    r = requests.get(f'http://movie_service:8000/movie/{id}/comments')
+    r = requests.get(f'{MOVIE_SERVICE}/movie/{id}/comments')
     if r.status_code == 200:
         comments = r.json()['data']
     else:
@@ -140,7 +140,7 @@ def delete_movie_comment(movie_id: str, comment_id: str):
     :return:
     """
     requests.delete(
-        f'http://movie_service:8000/movies/{movie_id}/comments/{comment_id}'
+        f'{MOVIE_SERVICE}/movies/{movie_id}/comments/{comment_id}'
     )
     return redirect(url_for('show_movie', id=id))
 

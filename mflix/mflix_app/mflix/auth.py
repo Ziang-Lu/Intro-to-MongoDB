@@ -8,7 +8,7 @@ import flask_login
 import requests
 from flask import redirect, render_template, request, url_for
 
-from . import app, login_manager
+from . import AUTH_SERVICE, app, login_manager
 from .models import User
 
 
@@ -35,7 +35,7 @@ def signup():
         )
 
     r = requests.post(
-        'http://auth_service:8000/users',
+        f'{AUTH_SERVICE}/users',
         json={
             'name': name,
             'email': email,
@@ -64,7 +64,7 @@ def login():
     pw = request.form['password']
 
     r = requests.get(
-        f'http://auth_service:8000/user-auth/?email={email}', json={'pw': pw}
+        f'{AUTH_SERVICE}/user-auth/?email={email}', json={'pw': pw}
     )
     if r.status_code != 200:
         return render_template('login.html', loginerror=r.json()['message'])
