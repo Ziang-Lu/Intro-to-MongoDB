@@ -10,13 +10,9 @@ __author__ = 'Ziang Lu'
 
 from pymongo import MongoClient
 
-USER = 'zianglu'
-PASSWORD = 'Zest2016!'
-DB = 'mflix'
+from notes.config import CONN_URI
 
-conn_uri = f'mongodb+srv://{USER}:{PASSWORD}@cluster0-hanbs.mongodb.net/{DB}?retryWrites=true&w=majority'
-
-cli = MongoClient(conn_uri)
+cli = MongoClient(CONN_URI)
 movies_initial = cli.mflix.movies_initial
 
 pipeline = [

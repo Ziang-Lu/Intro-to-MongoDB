@@ -63,7 +63,7 @@ Check out https://github.com/Ziang-Lu/Database-Learning-Notes/blob/master/5-Mong
 
 ### `PyMongo` Usage
 
-Check out https://github.com/Ziang-Lu/Database-Learning-Notes/blob/master/5-MongoDB/pymongo_demo.py and `scripting_projection.py`
+Check out https://github.com/Ziang-Lu/Database-Learning-Notes/blob/master/5-MongoDB/pymongo_demo.py and `scripting_data_cleaning.py`
 
 ### MongoDB Aggregation Framework
 

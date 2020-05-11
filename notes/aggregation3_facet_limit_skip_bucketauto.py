@@ -12,13 +12,9 @@ import pprint
 
 from pymongo import MongoClient
 
-USER = 'zianglu'
-PASSWORD = 'Zest2016!'
-DB = 'mflix'
+from notes.config import CONN_URI
 
-conn_uri = f'mongodb+srv://{USER}:{PASSWORD}@cluster0-hanbs.mongodb.net/{DB}?retryWrites=true&w=majority'
-
-cli = MongoClient(conn_uri)
+cli = MongoClient(CONN_URI)
 movies_initial = cli.mflix.movies_initial
 
 # Define top 100 language combinations as "usual"
@@ -34,14 +30,14 @@ pipeline = [
     # $facet stage processes the same input documents through multiple pipelines
     # in parallel.
     {
-        '$facet': {  # Define multiple pipelines
-            # pipeline1: 'top language combinations'
+        '$facet': {  # Define multiple sub-pipelines
+            # sub-pipeline1: 'top language combinations'
             'top language combinations': [
                 {'$limit': TOP_LANGUAGE_COMBINATIONS}  # stage2.1: 'limit' stage
             ],
-            # pipeline2: 'unsual combinations shared by'
+            # sub-pipeline2: 'unsual combinations shared by'
             'unusual combinations shared by': [
-                {'$skip': TOP_LANGUAGE_COMBINATIONS},  # 'skip' stage
+                {'$skip': TOP_LANGUAGE_COMBINATIONS},  # stage2.2.1: 'skip' stage
                 {'$bucketAuto': {
                     'groupBy': '$count',  # Identifier expression to group by
                     'buckets': 5,  # Create <= 5 buckets
@@ -51,7 +47,7 @@ pipeline = [
                     'output': {'language combinations': {'$sum': 1}}
                     # For each bucket, it will output the value we specified for
                     # the "output" key.
-                }}  # stage2.2: 'skip' + 'bucketAuto' stage
+                }}  # stage2.2.2: 'bucketAuto' stage
             ]
         }
     }  # stage2: 'facet' stage

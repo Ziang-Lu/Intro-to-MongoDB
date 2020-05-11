@@ -10,13 +10,9 @@ __author__ = 'Ziang Lu'
 
 from pymongo import MongoClient
 
-USER = 'zianglu'
-PASSWORD = 'Zest2016!'
-DB = 'mflix'
+from notes.config import CONN_URI
 
-conn_uri = f'mongodb+srv://{USER}:{PASSWORD}@cluster0-hanbs.mongodb.net/{DB}?retryWrites=true&w=majority'
-
-cli = MongoClient(conn_uri)
+cli = MongoClient(CONN_URI)
 movies_initial = cli.mflix.movies_initial
 
 pipeline = [
@@ -31,7 +27,7 @@ pipeline = [
             'poster': 1,
             'genres': {'$split': ['$genre', ', ']},  # Split the "genre" field from a string literal to an array
             'plot': 1,
-            'fullPlot': '$fullplot',  # (Rename)
+            'fullPlot': '$fullplot',  # Effectively renaming operation
             'directors': {'$split': ['$director', ', ']},
             'actors': {'$split': ['$cast', ', ']},
             'writers': {'$split': ['$writer', ', ']},
@@ -55,6 +51,6 @@ pipeline = [
     }  # stage3: 'out' stage
 ]
 
-# Since we already dump out the result to "movies_processed" collection, we
-# don't need to iterate over the result.
+# Since we already dump out the result to "movies_processed" collection, we can
+# simply execute the pipeline and no longer need to iterate over the results.
 movies_initial.aggregate(pipeline)

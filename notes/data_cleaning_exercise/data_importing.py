@@ -7,16 +7,14 @@ This module imports people-raw.json data into MongoDB server.
 __author__ = 'Ziang Lu'
 
 import bson.json_util
+
 from pymongo import InsertOne, MongoClient
 
-USER = 'zianglu'
-PASSWORD = 'Zest2016!'
-DB = 'mflix'
-BATCH_SIZE = 1000  # Batch size for batch insertion with bulk_write()
+from notes.config import CONN_URI
 
-conn_uri = f'mongodb+srv://{USER}:{PASSWORD}@cluster0-hanbs.mongodb.net/{DB}?retryWrites=true&w=majority'
+BATCH_SIZE = 1000  # Batch size for batch insertion
 
-cli = MongoClient(conn_uri)
+cli = MongoClient(CONN_URI)
 people_raw = cli.cleansing['people-raw']
 
 batch_insertions = []

@@ -9,14 +9,11 @@ __author__ = 'Ziang Lu'
 import dateparser
 from pymongo import MongoClient, UpdateOne
 
-USER = 'zianglu'
-PASSWORD = 'Zest2016!'
-DB = 'mflix'
-BATCH_SIZE = 1000  # Batch size for batch updating with bulk_write()
+from notes.config import CONN_URI
 
-conn_uri = f'mongodb+srv://{USER}:{PASSWORD}@cluster0-hanbs.mongodb.net/{DB}?retryWrites=true&w=majority'
+BATCH_SIZE = 1000  # Batch size for batch updating
 
-cli = MongoClient(conn_uri)
+cli = MongoClient(CONN_URI)
 people_raw = cli.cleansing['people-raw']
 
 batch_updates = []
